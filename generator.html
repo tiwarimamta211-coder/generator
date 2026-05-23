@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate E-Book PDF</title>
+    <!-- PDF Generation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #0f172a;
+            color: #f1f5f9;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .panel {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid #334155;
+        }
+        h1 { color: #38bdf8; margin-bottom: 10px; }
+        p { color: #94a3b8; font-size: 1.1rem; margin-bottom: 30px; }
+        .btn {
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #0284c7; }
+        
+        /* PDF Printable Content Styles */
+        #printable-content {
+            display: none;
+            color: #000000;
+            background: #ffffff;
+            padding: 20px;
+            text-align: left;
+        }
+        .pdf-page { page-break-after: always; font-size: 14px; line-height: 1.6; color: #222; }
+        .cover { text-align: center; padding-top: 150px; height: 900px; }
+        .cover h1 { font-size: 36px; color: #0284c7; margin-bottom: 20px; }
+        .cover h2 { font-size: 20px; color: #555; font-weight: normal; }
+        .cover .meta { margin-top: 200px; font-size: 14px; color: #777; }
+        h2.chap-title { font-size: 22px; color: #0284c7; border-bottom: 2px solid #0284c7; padding-bottom: 5px; margin-top: 30px; }
+        h3 { font-size: 16px; color: #333; margin-top: 20px; }
+        pre { background: #f4f4f5; border: 1px solid #e4e4e7; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 11px; overflow: hidden; white-space: pre-wrap; word-wrap: break-word; }
+        code { font-family: monospace; background: #f4f4f5; padding: 2px 4px; border-radius: 4px; font-size: 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 13px; }
+        th { background-color: #f8fafc; color: #333; }
+    </style>
+</head>
+<body>
+
+    <div class="panel">
+        <h1>📚 Chat to E-Book PDF Generator</h1>
+        <p>पूरी बातचीत, कोड आर्किटेक्चर, 9 चैप्टर्स की ई-बुक और फ्रीलांसिंग गाइड को एक सुंदर प्रिंटेबल PDF में कनवर्ट करने के लिए नीचे दिए गए बटन पर क्लिक करें।</p>
+        <button class="btn" onclick="generatePDF()">Download Complete E-Book PDF</button>
+    </div>
+
+    <!-- Hidden Content That Will Be Converted To PDF -->
+    <div id="printable-content">
+        
+        <!-- COVER PAGE -->
+        <div class="pdf-page cover">
+            <h1>JavaScript Event Explorer</h1>
+            <h2>Building a Professional Key Code Finder & Launching a Digital Product</h2>
+            <div class="meta">
+                <p><strong>Author & Publisher Guide</strong></p>
+                <p>Complete Architecture • 9 Comprehensive Chapters • Freelancing Roadmap</p>
+                <p>© 2026 Developer's Academy. All Rights Reserved.</p>
+            </div>
+        </div>
+
+        <!-- SUMMARY PAGE -->
+        <div class="pdf-page">
+            <h2 class="chap-title">Executive Summary (पूरी बातचीत का सारांश)</h2>
+            <p>यह दस्तावेज़ हमारी पूरी तकनीकी और व्यावसायिक बातचीत का एक व्यवस्थित संकलन है। इसमें निम्नलिखित मुख्य स्तंभों को कवर किया गया है:</p>
+            <ul>
+                <li><strong>तकनीकी सुधार:</strong> पुराने और बंद हो चुके <code>event.charCode</code> बग्स को हटाकर आधुनिक <code>event.key</code> और <code>event.code</code> पर आधारित 100% सटीक वेनिला जावास्क्रिप्ट आर्किटेक्चर का निर्माण।</li>
+                <li><strong>9 अध्यायों की संपूर्ण ई-बुक:</strong> कोड के पीछे के विज्ञान से लेकर, लेआउट्स, 3G नेटवर्क ऑप्टिमाइज़ेशन, डेस्कटॉप ऐप्स, क्रोम एक्सटेंशन और एआई इंटीग्रेशन तक का पूरा सफर।</li>
+                <li><strong>वेबसाइट और होस्टिंग:</strong> बिना किसी कोडिंग इंफ्रास्ट्रक्चर खर्च के <code>Netlify</code> और <code>Gumroad</code> की मदद से ₹0 के निवेश में एक ग्लोबल पेमेंट और डाउनलोड वेबसाइट सेटअप करना।</li>
+                <li><strong>फ्रीलांसिंग गाइड:</strong> अंतरराष्ट्रीय बाजारों (USA/UK) से हाई-पेइंग क्लाइंट्स हासिल करने के लिए प्रपोजल राइटिंग और पोर्टफोलियो बनाने का कम्प्लीट रोडमैप।</li>
+            </ul>
+        </div>
+
+        <!-- CHAPTER 1 - 3 -->
+        <div class="pdf-page">
+            <h2 class="chap-title">Chapter 1: The Anatomy of JavaScript Keyboard Events</h2>
+            <p>वेब ब्राउज़र्स में कीबोर्ड इनपुट को ट्रैक करने के लिए मुख्य रूप से तीन प्रकार के इवेंट्स होते हैं: <code>keydown</code>, <code>keypress</code> (Deprecated), और <code>keyup</code>।</p>
+            <h3>महत्वपूर्ण इवेंट प्रॉपर्टीज़:</h3>
+            <ul>
+                <li><strong>event.key:</strong> बटन का विजुअल टेक्स्ट दिखाता है (जैसे: 'a', 'Enter', ' ')। यह यूज़र के कीबोर्ड लेआउट/भाषा के अनुसार बदल जाता है।</li>
+                <li><strong>event.code:</strong> बटन की भौतिक स्थिति (Physical Location) को दर्शाता है (जैसे: KeyA, Numpad5)। यह लेआउट बदलने पर भी फिक्स रहता है।</li>
+            </ul>
+
+            <h2 class="chap-title">Chapter 2: HTML & UI Design (The Skeleton)</h2>
+            <p>हमारे टूल को आधुनिक और आकर्षक बनाने के लिए ग्लासमोर्फिज़्म (Glassmorphism) डिज़ाइन का उपयोग किया गया है। इनपुट कैप्चर करने के लिए पारंपरिक इनपुट बॉक्स के बजाय एक फोकसेबल <code>div</code> का उपयोग <code>tabindex="0"</code> के साथ किया गया है ताकि यूज़र का टाइप किया हुआ टेक्स्ट सीधे जावास्क्रिप्ट में प्रोसेस हो सके।</p>
+
+            <h2 class="chap-title">Chapter 3: Mastering State Management & LocalStorage</h2>
+            <p>ऐप बंद होने के बाद भी यूज़र की हिस्ट्री को याद रखने के लिए ब्राउज़र के <code>LocalStorage</code> का उपयोग किया जाता है। डेटा डुप्लीकेशन को रोकने के लिए जावास्क्रिप्ट के <code>Set</code> ऑब्जेक्ट का उपयोग किया जाता है: <code>uniqueKeys.add(keyData.key)</code>, जो केवल यूनिक वैल्यूज को ही मेमोरी में रखता है।</p>
+        </div>
+
+        <!-- CHAPTER 4 & 5 (THE FIXED CODE) -->
+        <div class="pdf-page">
+            <h2 class="chap-title">Chapter 4 & 5: The Core Implementation & Printable Bug Fixes</h2>
+            <p>पुराने कोडिंग ट्यूटोरियल्स में अक्सर लिखने वाले अक्षरों को पहचानने के लिए <code>event.charCode !== 0</code> सिखाया जाता है, जो आधुनिक ब्राउज़र्स पर हमेशा <code>0</code> रिटर्न करता है और फीचर को क्रैश कर देता है।</p>
+            <h3>सुधरा हुआ और पूरी तरह क्रियाशील जावास्क्रिप्ट कोड ब्लॉक:</h3>
+            <pre>
+// ============================================
+// CORE JAVASCRIPT ARCHITECTURE
+// ============================================
+let lastKeyData = null;
+let history = [];
+let keysPressed = 0;
+let uniqueKeys = new Set();
+
+function handleKeyEvent(event) {
+    event.preventDefault(); // ब्राउज़र के डिफॉल्ट शॉर्टकट्स को रोकना
+
+    const keyData = {
+        key: event.key,
+        code: event.code,
+        keyCode: event.keyCode,
+        charCode: event.charCode,
+        which: event.which,
+        shiftKey: event.shiftKey,
+        ctrlKey: event.ctrlKey,
+        altKey: event.altKey,
+        metaKey: event.metaKey,
+    };
+
+    lastKeyData = keyData;
+    keysPressed++;
+    uniqueKeys.add(keyData.key);
+
+    // UI अपडेट करने से ठीक पहले डेटा को हिस्ट्री में जोड़ना (Bug Fix)
+    history.unshift(keyData.key);
+    if (history.length > 50) history.pop();
+
+    displayKeyInfo(keyData);
+    updateFeatures(keyData);
+}
+
+function updateFeatures(keyData) {
+    const key = keyData.key;
+    // FIXED: आधुनिक और सटीक Printable चेक
+    const isPrintable = key.length === 1 && !keyData.ctrlKey && !keyData.metaKey;
+    // ... फीचर्स अपडेट करने का बाकी लॉजिक
+}</pre>
+            <p>डेटा को सुरक्षित कॉपी करने के लिए आधुनिक <code>Navigator Clipboard API</code> और फ़ाइल डाउनलोड के लिए प्रॉमिस-बेस्ड <code>Blob API</code> का उपयोग किया गया है।</p>
+        </div>
+
+        <!-- CHAPTER 6 & 7 -->
+        <div class="pdf-page">
+            <h2 class="chap-title">Chapter 6: Keyboard Layouts & Internationalization (I18n)</h2>
+            <p>गेम डेवलपमेंट में हमेशा <code>event.code</code> का उपयोग करना चाहिए ताकि भाषा बदलने पर भी कंट्रोल्स (W, A, S, D) न बदलें। वहीं टेक्स्ट एडिटर्स के लिए <code>event.key</code> बेहतर है। भारतीय भाषाओं के लिए, जब यूज़र <strong>Input Method Editors (IME)</strong> जैसे गूगल इनपुट टूल्स का उपयोग करता है, तो शब्द कंपोज़ होते समय ब्राउज़र <code>event.keyCode = 229</code> और <code>event.key = "Process"</code> रिटर्न करता है, जिसे संभालने के लिए जावास्क्रिप्ट के <code>compositionstart</code> और <code>compositionend</code> इवेंट्स का उपयोग किया जाता है।</p>
+
+            <h2 class="chap-title">Chapter 7: Production Readiness, Optimization & Deployment</h2>
+            <p>सीमित या धीमे मोबाइल नेटवर्क्स (जैसे 3G) पर ऐप को 1 सेकंड के अंदर लोड करने के लिए कोड को Minify करना और एनीमेशन लैग को मिटाने के लिए CSS में <code>will-change: transform, opacity;</code> का उपयोग करना अनिवार्य है। स्टेटिक फ्रंटएंड को मुफ़्त में लाइव करने के लिए <strong>Netlify</strong> या <strong>GitHub Pages</strong> सबसे बेहतरीन और सुरक्षित साधन हैं।</p>
+        </div>
+
+        <!-- BONUS CHAPTER & APPENDIX -->
+        <div class="pdf-page">
+            <h2 class="chap-title">Bonus Chapter: Beyond the Browser (Desktop Apps & Extensions)</h2>
+            <p>अपने वेब कोड को विंडोज़ या मैक के सॉफ्टवेयर में बदलने के लिए <strong>Electron.js</strong> फ्रेमवर्क का उपयोग किया जाता है, जहाँ मुख्य HTML फ़ाइल को <code>win.loadFile('index.html')</code> के जरिए सॉफ्टवेयर विंडो में लोड कराया जाता है। इसे क्रोम एक्सटेंशन बनाने के लिए रूट फ़ोल्डर में एक <code>manifest.json</code> फ़ाइल जोड़ी जाती है जिसमें <code>"manifest_version": 3</code> का उपयोग होता है।</p>
+
+            <h2 class="chap-title">Appendix: Troubleshooting & Cheat Sheet</h2>
+            <ul>
+                <li><strong>मोबाइल कीबोर्ड चैलेंज:</strong> वर्चुअल कीबोर्ड्स <code>keydown</code> को सही से सपोर्ट नहीं करते, इसलिए मोबाइल डिवाइसेस के लिए हमेशा <code>input</code> या <code>beforeinput</code> इवेंट्स ट्रैक करें।</li>
+                <li><strong>सिस्टम शॉर्टकट्स खोलना:</strong> यदि आप चाहते हैं कि टूल चलते समय भी पेज रिफ्रेश (Ctrl+R) काम करे, तो कोड में <code>if (event.ctrlKey && event.key === 'r') return;</code> की कंडीशन जोड़ें।</li>
+            </ul>
+        </div>
+
+        <!-- CHAPTER 8 & 9 -->
+        <div class="pdf-page">
+            <h2 class="chap-title">Chapter 8 & 9: Monetization, SaaS Model & Future-Proof AI</h2>
+            <p>एक मुफ़्त माइक्रो-टूल वेबसाइट से पैसे कमाने के लिए <strong>Google AdSense</strong> (डिस्प्ले विज्ञापन), फुटर में कोडिंग बुक्स/कोर्सेज के <strong>Affiliate Links</strong>, या <strong>Buy Me a Coffee</strong> बटन का उपयोग किया जा सकता है।</p>
+            <p>भविष्य के लिए इस टूल को अपग्रेड करने के लिए इसमें ब्राउज़र की <code>Web Speech API</code> के जरिए वॉइस-असिस्टेड की-कोड सर्च जोड़ा जा सकता है, जिससे शारीरिक रूप से अक्षम डेवलपर्स भी बिना बटन दबाए सिर्फ बोलकर (जैसे: "What is code for Enter") किसी भी की (Key) की पूरी कोडिंग प्रॉपर्टीज जान सकते हैं।</p>
+        </div>
+
+        <!-- FREELANCING ROADMAP -->
+        <div class="pdf-page">
+            <h2 class="chap-title">The Freelancing Roadmap: Turning Skills into Income</h2>
+            <p>फ्रीलांसिंग की शुरुआत करने और अंतरराष्ट्रीय क्लाइंट्स (USA, UK) से प्रोजेक्ट्स हासिल करने का व्यावहारिक ढांचा:</p>
+            <h3>1. किलर पोर्टफोलियो</h3>
+            <p>अपने बनाए गए सभी टूल्स को Netlify पर लाइव रखें और गिटहब रिपॉजिटरी में एक स्पष्ट और शानदार <code>README.md</code> फ़ाइल लिखें जो प्रोजेक्ट की समस्या और आपके द्वारा निकाले गए समाधान को दर्शाती हो।</p>
+            <h3>2. प्रपोजल राइटिंग का अचूक फॉर्मूला (The Solution Framework)</h3>
+            <p>कभी भी अपना अनुभव बेचने की कोशिश न करें, हमेशा क्लाइंट की समस्या का समाधान बेचें। प्रपोजल में सीधे बात करें कि आप बिना किसी भारी लाइब्रेरी का इस्तेमाल किए क्लीन वेनिला जावास्क्रिप्ट कोड के साथ उनकी वेबसाइट को कैसे तेज़ और एरर-फ्री बना सकते हैं।</p>
+            <h3>3. प्लेटफॉर्म्स की रणनीति</h3>
+            <p>शुरुआती काम के लिए Fiverr पर गिक्स (Gigs) बनाएं और लॉन्ग-टर्म हाई-पेइंग काम के लिए LinkedIn पर सीधे छोटे बिज़नेस ओनर्स या एजेंसी हेड्स को ढूंढकर उन्हें कस्टमाइज़्ड कोल्ड ईमेल्स भेजें।</p>
+        </div>
+
+        <!-- MARKETING & WEBSITE SETUP -->
+        <div class="pdf-page">
+            <h2 class="chap-title">E-book Website Setup & Launch Guide</h2>
+            <p>बिना किसी इंफ्रास्ट्रक्चर खर्च के अपनी ई-बुक वेबसाइट बनाने और बेचने की 3-स्टेप प्रोसेस:</p>
+            <table>
+                <tr>
+                    <th>चरण</th>
+                    <th>प्लेटफ़ॉर्म / कार्य</th>
+                    <th>विवरण</th>
+                </tr>
+                <tr>
+                    <td><strong>स्टेप 1</strong></td>
+                    <td>Gumroad Setup</td>
+                    <td>Gumroad.com पर मुफ़्त अकाउंट बनाकर अपनी ई-बुक की PDF/ZIP अपलोड करें। पेमेंट गेटवे और ऑटोमैटिक डिलीवरी यही संभालेगा। पब्लिश करके अपना प्रोडक्ट लिंक कॉपी करें।</td>
+                </tr>
+                <tr>
+                    <td><strong>स्टेप 2</strong></td>
+                    <td>HTML Frontend</td>
+                    <td>एक सिंगल-पेज लैंडिंग पेज (<code>index.html</code>) बनाएं और उसमें "Get Your Copy Now" वाले बटन के एंकर टैग (<code>href</code>) में अपना Gumroad लिंक पेस्ट कर दें।</td>
+                </tr>
+                <tr>
+                    <td><strong>स्टेप 3</strong></td>
+                    <td>Netlify Deploy</td>
+                    <td>app.netlify.com पर जाएं और अपने प्रोजेक्ट फ़ोल्डर को सीधे उनके डैशबोर्ड पर Drag and Drop कर दें। आपकी वेबसाइट 5 सेकंड में लाइव हो जाएगी।</td>
+                </tr>
+            </table>
+            <p style="margin-top: 100px; text-align: center; color: #777; font-size: 12px;">--- End of Document. Printed on 2026-05-22 ---</p>
+        </div>
+
+    </div>
+
+    <script>
+        function generatePDF() {
+            // Target the printable element
+            const element = document.getElementById('printable-content');
+            element.style.display = 'block'; // Temporarily show for capturing
+
+            // Configuration options for html2pdf
+            const opt = {
+                margin:       10,
+                filename:     'JavaScript_Event_Explorer_Ebook.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, logging: false },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Generate and download the PDF securely
+            html2pdf().set(opt).from(element).save().then(() => {
+                element.style.display = 'none'; // Re-hide after complete
+            });
+        }
+    </script>
+</body>
+</html>
